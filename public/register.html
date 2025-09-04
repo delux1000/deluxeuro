@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - Delux Euro Wallet</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('https://play-lh.googleusercontent.com/0a9Mp1hlxqgKi3rDAgpv4eN2UIZLZ0jsDWZP1eW0JEejcDAgUeLIOpCkNHE8MC6dIw=w526-h296-rw') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    h2 {
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      color: #ffcc00;
+    }
+
+    form {
+      background: transparent;
+      color: white;
+      padding: 30px 25px;
+      border-radius: 15px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+
+    button {
+      margin-top: 25px;
+      width: 100%;
+      padding: 14px;
+      font-size: 1.2em;
+      background: linear-gradient(to right, #007BFF, #0056b3);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #0056b3, #003d80);
+    }
+
+    p {
+      margin-top: 20px;
+      font-size: 1em;
+      color: #eee;
+    }
+
+    a {
+      color: #ffcc00;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .home-btn {
+      margin-top: 30px;
+      padding: 12px 25px;
+      font-size: 1em;
+      background-color: #ffcc00;
+      color: #001f4d;
+      font-weight: bold;
+      border-radius: 10px;
+      text-decoration: none;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .home-btn:hover {
+      background-color: #e6b800;
+    }
+
+    @media (max-width: 600px) {
+      h2 {
+        font-size: 2em;
+      }
+
+      form {
+        padding: 20px;
+      }
+
+      button,
+      .home-btn {
+        font-size: 1em;
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Register</h2>
+  <form action="/register" method="POST">
+    <label for="fullName">Full Name:</label>
+    <input type="text" id="fullName" name="fullName" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="phoneNumber">Phone Number:</label>
+    <input type="text" id="phoneNumber" name="phoneNumber" required>
+
+    <label for="pin">PIN:</label>
+    <input type="password" id="pin" name="pin" required maxlength="6" minlength="6">
+
+    <button type="submit">Register</button>
+  </form>
+
+  <p>Already have an account? <a href="/login.html">Login</a></p>
+  <a href="index.html" class="home-btn">Go to Home</a>
+
+</body>
+</html>

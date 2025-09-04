@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Investment</title>
+  <style>
+    /* [same styling, unchanged] */
+    body {
+      font-family: Arial, sans-serif;
+      background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnu8pOGqFhSeLaZLSV3rODF4Paq-cIWy2mpVt3Y51ROHgHkS2EW2g0B6o&s=10') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    .overlay {
+      min-height: 100vh;
+      padding: 30px 0;
+    }
+
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding-top: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #e67e22;
+      font-size: 32px;
+      text-shadow: 2px 2px #fff;
+      animation: fadeSlideIn 1.5s ease-in-out;
+    }
+
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .welcome {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 20px;
+      color: #fff;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 10px;
+      animation: fadeInScale 2s ease-in-out;
+    }
+
+    .welcome h1 {
+      font-size: 36px;
+      color: #00ffcc;
+      margin-bottom: 10px;
+      text-shadow: 3px 3px #000;
+    }
+
+    .welcome p {
+      font-size: 20px;
+      color: #f1f1f1;
+    }
+
+    @keyframes fadeInScale {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .form-container {
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+      border-radius: 8px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    .success-message {
+      text-align: center;
+      color: green;
+      font-size: 18px;
+      display: none;
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      font-size: 18px;
+      color: #3498db;
+    }
+
+    .loading span {
+      animation: loading 1s infinite;
+    }
+
+    @keyframes loading {
+      0% { opacity: 0; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    .testimonials {
+      margin-top: 40px;
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+      animation: fadeInSlideUp 1.5s ease-in-out;
+    }
+
+    @keyframes fadeInSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .testimonial {
+      font-style: italic;
+      margin-bottom: 15px;
+      font-size: 18px;
+      color: #2c3e50;
+    }
+
+    .testimonial::before {
+      content: "“";
+      font-size: 24px;
+      color: #16a085;
+    }
+
+    .testimonial::after {
+      content: "”";
+      font-size: 24px;
+      color: #16a085;
+    }
+
+    .author {
+      text-align: right;
+      font-weight: bold;
+      color: #34495e;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <div class="container">
+      <div class="welcome">
+        <h1>Welcome to Secure Investment Hub</h1>
+        <p>Grow your funds with our trusted and high-yield investment packages.</p>
+      </div>
+
+      <h2>Investment Form</h2>
+      <div class="form-container">
+        <form id="investment-form">
+          <label for="amount">Investment Amount (€):</label>
+          <input type="number" id="amount" name="amount" min="2000" required>
+
+          <label for="duration">Duration (in days):</label>
+          <select id="duration" name="duration" required>
+            <option value="15" data-multiplier="3">15 days (3x Return)</option>
+            <option value="30" data-multiplier="6">30 days (6x Return)</option>
+            <option value="60" data-multiplier="10">60 days (10x Return)</option>
+            <option value="90" data-multiplier="15">90 days (15x Return)</option>
+            <option value="120" data-multiplier="20">120 days (20x Return)</option>
+            <option value="150" data-multiplier="30">150 days (30x Return)</option>
+            <option value="180" data-multiplier="40">180 days (40x Return)</option>
+          </select>
+
+          <p id="return-amount">Estimated Return: €0.00</p>
+
+          <button type="submit">Start Investment</button>
+        </form>
+      </div>
+
+      <p class="success-message" id="success-message">Investment Successful! Redirecting...</p>
+      <div class="loading" id="loading">
+        <span>Processing...</span>
+      </div>
+
+      <div class="testimonials" id="testimonials">
+        <h2>What Our Investors Are Saying</h2>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('investment-form');
+    const successMessage = document.getElementById('success-message');
+    const loading = document.getElementById('loading');
+    const returnAmountText = document.getElementById('return-amount');
+
+    form.addEventListener('input', () => {
+      const amount = parseFloat(document.getElementById('amount').value);
+      const durationElement = document.getElementById('duration');
+      const multiplier = parseFloat(durationElement.options[durationElement.selectedIndex].getAttribute('data-multiplier'));
+
+      if (amount && multiplier) {
+        const returnAmount = amount * multiplier;
+        returnAmountText.textContent = `Estimated Return: €${returnAmount.toFixed(2)}`;
+      }
+    });
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const amount = document.getElementById('amount').value;
+      const duration = document.getElementById('duration').value;
+
+      loading.style.display = 'block';
+
+      const response = await fetch('/invest', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `amount=${amount}&duration=${duration}`,
+      });
+
+      const result = await response.text();
+
+      setTimeout(() => {
+        loading.style.display = 'none';
+      }, 5000);
+
+      if (result.includes('Investment Started!')) {
+        successMessage.style.display = 'block';
+        setTimeout(() => {
+          window.location.href = '/investments.html';
+        }, 3000);
+      } else {
+        alert(result);
+      }
+    });
+
+    const testimonialsData = [
+      { text: "I invested €500 and received €3000 in just 15 days. Highly recommend!", author: "Sarah J." },
+      { text: "They are transparent and reliable. My 30-day plan gave me great returns.", author: "Michael A." },
+      { text: "Customer service is excellent. I'm already planning my next investment.", author: "Ngozi E." },
+      { text: "Safe and rewarding! The platform is easy to use.", author: "Daniel O." }
+    ];
+
+    const testimonialsContainer = document.getElementById('testimonials');
+    testimonialsData.forEach(item => {
+      const div = document.createElement('div');
+      div.classList.add('testimonial');
+      div.innerHTML = `${item.text}<div class="author">- ${item.author}</div>`;
+      testimonialsContainer.appendChild(div);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About - Delux Euro Wallet</title>
+  <style>
+    body {
+      background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRF512L4tv8xf0pjvTv3fs45xECsfVyUdu1bjeAMx62w&s&ec=72917722') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      color: white;
+      padding: 50px;
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      color: #FFD700; /* Golden color for welcome message */
+    }
+    .about-content {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 800px;
+      margin: auto;
+      font-size: 1.2em;
+    }
+    .message-icon {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #007BFF;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: white;
+      font-size: 30px;
+    }
+    .popup {
+      position: fixed;
+      bottom: 100px;
+      left: 20px;
+      background: white;
+      color: black;
+      padding: 20px;
+      border-radius: 10px;
+      display: none;
+      width: 260px;
+    }
+    .popup input, .popup textarea {
+      width: 100%;
+      margin: 6px 0;
+      padding: 10px;
+    }
+    .popup button {
+      background: #28a745;
+      color: white;
+      padding: 10px;
+      border: none;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .advertisement {
+      margin-top: 30px;
+      background: rgba(255, 223, 0, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      font-size: 1.4em;
+      color: black;
+      font-weight: bold;
+    }
+    .advertisement a {
+      color: #007BFF;
+      text-decoration: none;
+      font-weight: normal;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Delux Euro Wallet</h1>
+  <p style="font-size: 1.5em; color: #FFD700;">The Most Reliable and Secure Wallet for Your Digital Needs!</p>
+  <div class="about-content">
+    <h2>Who We Are</h2>
+    <p>Delux Euro Wallet is a trusted online wallet that allows you to easily manage your funds, earn bonuses, and make secure transactions. Join us today for the best digital wallet experience!</p>
+    <h2>Our Mission</h2>
+    <p>We aim to provide our users with the best platform to store, transfer, and earn money. Whether you want to listen to music, watch videos, or do remote jobs, we have you covered!</p>
+    <h2>Why Choose Us?</h2>
+    <ul>
+      <li>Secure and easy-to-use platform</li>
+      <li>Earn money while enjoying your favorite activities</li>
+      <li>Instant withdrawals and transfers</li>
+      <li>24/7 customer support</li>
+    </ul>
+  </div>
+
+  <div class="advertisement">
+    <p>🚀 Boost your wallet today! Earn more with every transaction and enjoy the perks of our premium services. <a href="/register.html">Sign up now</a> and get started!</p>
+  </div>
+
+  <div class="message-icon" onclick="togglePopup()">✉</div>
+  <div class="popup" id="popupForm">
+    <h3>Contact Admin</h3>
+    <input type="text" id="fullName" placeholder="Full Name" />
+    <input type="tel" id="phone" placeholder="Phone Number" />
+    <textarea id="message" rows="3" placeholder="Your Message..."></textarea>
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <script>
+    function togglePopup() {
+      const popup = document.getElementById("popupForm");
+      popup.style.display = popup.style.display === "block" ? "none" : "block";
+    }
+
+    function sendMessage() {
+      const name = document.getElementById("fullName").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const message = document.getElementById("message").value.trim();
+      if (name && phone && message) {
+        const telegramLink = `https://wa.me/+447529287246?text=Name:%20${encodeURIComponent(name)}%0APhone:%20${encodeURIComponent(phone)}%0AMessage:%20${encodeURIComponent(message)}%0AContact%20Admin`;
+        window.open(telegramLink, '_blank');
+      } else {
+        alert("Please fill all fields");
+      }
+    }
+  </script>
+</body>
+</html>

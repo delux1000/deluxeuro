@@ -1,0 +1,315 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
+  <title>Delux Official Dashboard</title>  
+  <link rel="stylesheet" href="styles.css" />  
+  <style>  
+    body {  
+      font-family: Arial, sans-serif;  
+      background-color: #f4f4f4;  
+      margin: 0;  
+      padding: 0;  
+      background-image: url('https://play-lh.googleusercontent.com/41vPj7wS-6P5HfjnByTBIIFliGJLAHrYQxbKUtWHRjBQKtdoOEeSlsEZ-Nd9IjVdrw=w526-h296-rw'); /* Adding a subtle background image */  
+      background-size: cover;  
+      background-position: center;  
+    }  
+  
+    header {  
+      background-color: rgba(44, 62, 80, 0.9); /* Transparent dark overlay for better text readability */  
+      color: white;  
+      padding: 30px 0;  
+      text-align: center;  
+      position: relative;  
+      border-bottom: 5px solid #00c3ff; /* Adding a sleek border under the header */  
+    }  
+  
+    .header-title {  
+      font-size: 36px;  
+      font-weight: bold;  
+      animation: glow 2s infinite alternate, fadeIn 3s ease-in-out;  
+      background: linear-gradient(45deg, #00c3ff, #ffff1c);  
+      -webkit-background-clip: text;  
+      -webkit-text-fill-color: transparent;  
+      text-shadow: 0 0 10px #00c3ff, 0 0 20px #ffff1c;  
+    }  
+  
+    @keyframes glow {  
+      0% {  
+        text-shadow: 0 0 10px #00c3ff, 0 0 20px #00c3ff;  
+      }  
+      100% {  
+        text-shadow: 0 0 20px #ffff1c, 0 0 30px #ffff1c;  
+      }  
+    }  
+  
+    @keyframes fadeIn {  
+      from { opacity: 0; transform: translateY(-10px); }  
+      to { opacity: 1; transform: translateY(0); }  
+    }  
+  
+    .ads-message {  
+      color: #ffeb3b;  
+      font-size: 18px;  
+      margin-top: 5px;  
+      font-weight: bold;  
+      animation: slideUp 2s ease-out; /* Adding sliding animation */  
+    }  
+
+    @keyframes slideUp {  
+      0% {  
+        transform: translateY(20px);  
+        opacity: 0;  
+      }  
+      100% {  
+        transform: translateY(0);  
+        opacity: 1;  
+      }  
+    }  
+  
+    .container {  
+      margin: 20px;  
+      position: relative;  
+      background-color: rgba(255, 255, 255, 0.8); /* Light background for content blocks */  
+      border-radius: 15px;  
+      padding: 20px;  
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow effect for realism */  
+    }  
+  
+    .atm-card {  
+      background: linear-gradient(135deg, #1abc9c, #16a085);  
+      color: white;  
+      border-radius: 20px;  
+      padding: 20px;  
+      max-width: 350px;  
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);  
+      margin: 40px auto;  
+      text-align: left;  
+      font-size: 18px;  
+      position: relative;  
+      border: 1px solid #16a085;  
+      transition: all 0.3s ease-in-out; /* Adding smooth transition for hover effect */  
+    }  
+  
+    .atm-card:hover {  
+      transform: translateY(-10px); /* Hover effect for dynamic feel */  
+      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);  
+    }  
+  
+    .atm-card .name {  
+      font-size: 22px;  
+      font-weight: bold;  
+      margin-top: 10px;  
+      color: #ecf0f1;  
+    }  
+  
+    .atm-card .balance {  
+      font-size: 28px;  
+      font-weight: bold;  
+      margin-top: 20px;  
+      color: gold;  
+    }  
+  
+    .atm-card .label {  
+      font-size: 16px;  
+      color: #ecf0f1;  
+    }  
+  
+    .btn {  
+      display: inline-block;  
+      margin: 10px;  
+      padding: 15px 25px;  
+      background-color: #007bff;  
+      color: white;  
+      text-decoration: none;  
+      border-radius: 10px;  
+      font-size: 18px;  
+      font-weight: bold;  
+      transition: all 0.3s ease;  
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Soft shadow for buttons */  
+    }  
+  
+    .btn:hover {  
+      background-color: #0056b3;  
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);  
+      transform: translateY(-3px); /* Hover effect to lift the button */  
+    }  
+  
+    #contact-icon {  
+      position: fixed;  
+      bottom: 20px;  
+      right: 20px;  
+      background: #007bff;  
+      color: white;  
+      border-radius: 50%;  
+      width: 60px;  
+      height: 60px;  
+      text-align: center;  
+      line-height: 60px;  
+      font-size: 30px;  
+      cursor: pointer;  
+      z-index: 999;  
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);  
+      transition: all 0.3s ease;  
+    }  
+  
+    #contact-icon:hover {  
+      transform: translateY(-5px);  
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);  
+    }  
+  
+    #contact-form {  
+      display: none;  
+      position: fixed;  
+      bottom: 80px;  
+      right: 20px;  
+      background: white;  
+      border: 1px solid #ccc;  
+      padding: 15px;  
+      border-radius: 10px;  
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);  
+      z-index: 1000;  
+      width: 250px;  
+    }  
+  
+    #contact-form input,  
+    #contact-form textarea {  
+      width: 100%;  
+      margin: 5px 0;  
+      padding: 8px;  
+      border-radius: 5px;  
+      border: 1px solid #ccc;  
+    }  
+  
+    #contact-form button {  
+      background: #28a745;  
+      color: white;  
+      border: none;  
+      padding: 10px;  
+      width: 100%;  
+      border-radius: 5px;  
+      font-size: 16px;  
+      font-weight: bold;  
+    }  
+  
+    .background-image {  
+      background-image: url('your-background-image-url.jpg');  
+      background-size: cover;  
+      background-position: center;  
+      padding: 80px 0;  
+      text-align: center;  
+      color: white;  
+      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3);  
+    }  
+  
+    .background-image h1 {  
+      font-size: 48px;  
+      margin-bottom: 30px;  
+    }  
+  
+    .background-image .btn {  
+      margin: 15px;  
+      padding: 20px 35px;  
+      background-color: #9b59b6;  
+      font-size: 20px;  
+      font-weight: bold;  
+    }  
+  
+    .background-image .btn:hover {  
+      background-color: #8e44ad;  
+    }  
+  
+    @media (max-width: 768px) {  
+      .btn {  
+        padding: 10px 20px;  
+        font-size: 16px;  
+      }  
+  
+      .background-image h1 {  
+        font-size: 36px;  
+      }  
+  
+      .background-image .btn {  
+        font-size: 18px;  
+        padding: 15px 30px;  
+      }  
+    }  
+  </style>  
+</head>  
+<body>  
+  <header>  
+    <div class="header-title">Delux Official</div>  
+    <div class="ads-message" id="adsText">Welcome to Delux Official!</div>  
+  </header>  
+  
+  <div class="container">  
+    <div class="atm-card">  
+      <div class="label">Account Balance</div>  
+      <div class="balance"><span class="symbol">€</span><span id="balValue">Loading...</span></div>  
+      <div class="label">Account Holder</div>  
+      <div class="name" id="user-info">Loading...</div>  
+    </div>  
+  
+    <div class="background-image">  
+      <h1>Welcome to Your Dashboard</h1>  
+      <a href="/deposit.html" class="btn">Deposit Funds</a>  
+      <a href="/withdraw.html" class="btn">Withdraw Funds</a>  
+      <a href="/transaction-history.html" class="btn">View Transaction History</a>  
+      <a href="/invest.html" class="btn">Invest</a>  
+      <a href="/earn.html" class="btn">Earn</a>  
+      <a href="/investments.html" class="btn">My Investments</a>  
+      <a href="/logout" class="btn">Logout</a>  
+    </div>  
+  
+    <div id="contact-icon">?</div>  
+  
+    <div id="contact-form">  
+      <h4>Contact Support</h4>  
+      <input type="text" id="name" placeholder="Your Name" required>  
+      <input type="email" id="email" placeholder="Your Email" required>  
+      <textarea id="message" placeholder="Your Message" required></textarea>  
+      <button onclick="sendMessage()">Send</button>  
+    </div>  
+  </div>  
+  
+  <script>  
+    // Fetch user info  
+    fetch('/user-info')  
+      .then(response => response.json())  
+      .then(data => {  
+        document.getElementById('user-info').textContent = data.fullName;  
+        document.getElementById('balValue').textContent = data.balance;  
+      });  
+  
+    // Toggle contact form  
+    document.getElementById('contact-icon').addEventListener('click', () => {  
+      const form = document.getElementById('contact-form');  
+      form.style.display = form.style.display === 'block' ? 'none' : 'block';  
+    });  
+  
+    // Send Telegram message  
+    function sendMessage() {  
+      const name = document.getElementById('name').value;  
+      const email = document.getElementById('email').value;  
+      const message = document.getElementById('message').value;  
+      const fullMessage = `Name: ${name}%0AEmail: ${email}%0AMessage: ${message}`;  
+      const telegramURL = `https://wa.me/share/url?url=&text=${encodeURIComponent(fullMessage)}&to=+447529287246`;  
+      window.open(telegramURL, '_blank');  
+    }  
+  
+    // Animated welcome/ads message  
+    const adsMessages = [  
+      "Welcome to Delux Official!",  
+      "Invest with confidence!",  
+      "Earn daily rewards!",  
+      "Your future is secure here!"  
+    ];  
+    let index = 0;  
+    setInterval(() => {  
+      document.getElementById('adsText').textContent = adsMessages[index];  
+      index = (index + 1) % adsMessages.length;  
+    }, 4000);  
+  </script>  
+</body>  
+</html>

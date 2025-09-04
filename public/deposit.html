@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Deposit</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjVhXtl-fjuOAsPsptRKgc1vtZJfrfBxTFg39vHlA1suyyrwf3MNaqIj0&s=10') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 2em;
+      color: yellow;
+    }
+
+    .form-container {
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    label, select, input, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #00aaff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    #loading {
+      font-weight: bold;
+      color: yellow;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #conversionResult {
+      font-size: 1.1em;
+      margin-top: -10px;
+      color: lightgreen;
+    }
+
+    #welcomeMessage {
+      text-align: center;
+      font-size: 1.3em;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: cyan;
+    }
+
+    @media (max-width: 600px) {
+      .form-container {
+        padding: 15px;
+      }
+
+      h2 {
+        font-size: 1.5em;
+      }
+
+      #welcomeMessage {
+        font-size: 1.1em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Deposit Funds</h2>
+    <div id="welcomeMessage">Welcome! Start your deposit below.</div>
+    <form id="depositForm">
+      <label for="amount">Amount in Euro (€):</label>
+      <input type="number" id="amount" name="amount" required step="0.01">
+      <div id="conversionResult"></div>
+
+      <label for="country">Select Country:</label>
+      <select id="country" name="country" required>
+        <option value="">--Select--</option>
+        <option value="Nigeria">Nigeria</option>
+        <option value="USA">USA</option>
+        <option value="UK">UK</option>
+        <option value="Germany">Germany</option>
+        <option value="India">India</option>
+        <option value="Canada">Canada</option>
+        <option value="Australia">Australia</option>
+        <option value="France">France</option>
+        <option value="Italy">Italy</option>
+        <option value="Spain">Spain</option>
+        <option value="Brazil">Brazil</option>
+        <option value="Mexico">Mexico</option>
+        <option value="Japan">Japan</option>
+        <option value="China">China</option>
+        <option value="Russia">Russia</option>
+        <option value="South Africa">South Africa</option>
+        <option value="Argentina">Argentina</option>
+        <option value="Saudi Arabia">Saudi Arabia</option>
+        <option value="Egypt">Egypt</option>
+        <option value="Turkey">Turkey</option>
+      </select>
+
+      <div id="paymentTypeSection" class="hidden">
+        <label for="paymentType">Select Payment Type:</label>
+        <select id="paymentType" name="paymentType">
+          <option value="Bitcoin">Bitcoin</option>
+          <option value="Ethereum">Ethereum</option>
+          <option value="USDT">USDT</option>
+          <option value="PayPal">PayPal</option>
+          <option value="Skrill">Skrill</option>
+          <option value="Zelle">Zelle</option>
+          <option value="Cash App">Cash App</option>
+          <option value="Alipay">Alipay</option>
+          <option value="WeChat Pay">WeChat Pay</option>
+          <option value="Western Union">Western Union</option>
+          <option value="MoneyGram">MoneyGram</option>
+          <option value="Perfect Money">Perfect Money</option>
+          <option value="Neteller">Neteller</option>
+          <option value="Payeer">Payeer</option>
+          <option value="Ria Money Transfer">Ria Money Transfer</option>
+          <option value="Gift Card">Gift Card</option>
+          <option value="Wise (TransferWise)">Wise (TransferWise)</option>
+          <option value="Venmo">Venmo</option>
+          <option value="Apple Pay">Apple Pay</option>
+          <option value="Google Pay">Google Pay</option>
+        </select>
+      </div>
+
+      <button type="submit">Send</button>
+    </form>
+
+    <div id="loading" class="hidden">Processing... Please wait 5 seconds</div>
+
+    <div id="nigeriaInstructions" class="hidden">
+      <h3>Deposit Instructions</h3>
+      <p>Please send the exact amount to:</p>
+      <p><strong>Account Number:</strong> 8110679255<br>
+         <strong>Bank:</strong> Opay<br>
+         <strong>Account Name:</strong> Lawrence Kabirat</p>
+      <form action="https://wa.me/+12568212395" target="_blank">
+        <button type="submit">Paid</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const amountInput = document.getElementById('amount');
+    const countrySelect = document.getElementById('country');
+    const paymentTypeSelect = document.getElementById('paymentType');
+    const conversionResult = document.getElementById('conversionResult');
+    const paymentTypeSection = document.getElementById('paymentTypeSection');
+    const depositForm = document.getElementById('depositForm');
+    const loadingDiv = document.getElementById('loading');
+    const instructionsDiv = document.getElementById('nigeriaInstructions');
+    const welcomeMessage = document.getElementById('welcomeMessage');
+
+    let euroToNairaRate = 2000;
+    let euroToBitcoinRate = 1 / 20000;
+
+    async function updateConversion() {
+      const amount = parseFloat(amountInput.value);
+      const country = countrySelect.value;
+      const paymentType = paymentTypeSelect?.value;
+
+      if (isNaN(amount)) {
+        conversionResult.textContent = "";
+        welcomeMessage.innerText = "Welcome! Start your deposit below.";
+        return;
+      }
+
+      let message = `You are depositing €${amount}`;
+
+      if (country === "Nigeria") {
+        const naira = amount * euroToNairaRate;
+        conversionResult.textContent = `Converted to Naira: ₦${naira.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+        message += ` ~ ₦${naira.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+      }
+
+      if (paymentType === "Bitcoin") {
+        const btc = amount * euroToBitcoinRate;
+        conversionResult.textContent = `Converted to BTC: ${btc.toFixed(8)} BTC`;
+        message += ` ~ ${btc.toFixed(8)} BTC`;
+      }
+
+      welcomeMessage.innerText = message;
+    }
+
+    amountInput.addEventListener('input', updateConversion);
+    countrySelect.addEventListener('change', () => {
+      const country = countrySelect.value;
+      paymentTypeSection.classList.toggle('hidden', country === 'Nigeria');
+      updateConversion();
+    });
+
+    paymentTypeSelect?.addEventListener('change', updateConversion);
+
+    depositForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const amount = parseFloat(amountInput.value);
+      const country = countrySelect.value;
+      const paymentType = paymentTypeSelect?.value || '';
+
+      if (country === 'Nigeria') {
+        loadingDiv.classList.remove('hidden');
+
+        setTimeout(async () => {
+          loadingDiv.classList.add('hidden');
+          instructionsDiv.classList.remove('hidden');
+          const naira = (amount * euroToNairaRate).toLocaleString();
+          alert(`You are depositing ₦${naira}. Send to the account shown.`);
+        }, 5000);
+      } else {
+        const btc = (amount * euroToBitcoinRate).toFixed(8);
+        const message = encodeURIComponent(`Delux Deposit\nAmount: €${amount}\nCountry: ${country}\nPayment Type: ${paymentType}\nBTC: ${btc}`);
+        const link = `https://wa.me/+447529287246?text=${message}`;
+        window.location.href = link;
+      }
+    });
+  </script>
+
+</body>
+</html>

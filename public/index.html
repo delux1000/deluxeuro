@@ -1,0 +1,299 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
+  <title>Delux earning platform</title>  
+  <style>  
+    body {  
+      margin: 0;  
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  
+      background: url('https://play-lh.googleusercontent.com/GqMIbM5-5azfilIRqW9E_7Hbz-QHVqVWnQLKPLA5fDVMzN16FxhiWIKUYQ2P0zUArQ=w526-h296-rw') no-repeat center center fixed;  
+      background-size: cover;  
+      color: white;  
+      text-align: center;  
+    }  
+  
+    header {  
+      background: linear-gradient(to right, #001f4d, #003366);  
+      padding: 30px;  
+      font-size: 2.8em;  
+      font-weight: bold;  
+      color: #ffcc00;  
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.6);  
+      letter-spacing: 1px;  
+      position: relative;  
+    }  
+  
+    .download-btn {  
+      position: absolute;  
+      top: 60px; /* moved down from 20px to 60px */  
+      right: 20px;  
+      padding: 10px 20px;  
+      font-size: 16px;  
+      background-image: linear-gradient(to right, #007BFF, #0056b3);  
+      color: white;  
+      border: none;  
+      border-radius: 8px;  
+      font-weight: bold;  
+      cursor: pointer;  
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.4);  
+      text-decoration: none;  
+    }  
+  
+    .download-btn:hover {  
+      background-image: linear-gradient(to right, #0056b3, #003d80);  
+    }  
+  
+    .highlight {  
+      background: rgba(255, 255, 255, 0.95);  
+      color: #111;  
+      padding: 30px 20px;  
+      font-size: 1.5em;  
+      border-radius: 12px;  
+      max-width: 800px;  
+      margin: 30px auto;  
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);  
+    }  
+  
+    .highlight strong {  
+      color: #e60000;  
+      font-size: 1.6em;  
+    }  
+  
+    .btn {  
+      padding: 18px 36px;  
+      margin: 20px 15px;  
+      font-size: 20px;  
+      border: none;  
+      border-radius: 12px;  
+      cursor: pointer;  
+      background-image: linear-gradient(to right, #007BFF, #0056b3);  
+      color: white;  
+      font-weight: bold;  
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);  
+      transition: transform 0.2s ease, background-color 0.3s ease;  
+    }  
+  
+    .btn:hover {  
+      transform: scale(1.05);  
+      background-image: linear-gradient(to right, #0056b3, #003d80);  
+    }  
+  
+    .section {  
+      background: rgba(0, 0, 0, 0.75);  
+      padding: 50px 20px;  
+      margin-top: 40px;  
+    }  
+  
+    .section h2 {  
+      margin-bottom: 30px;  
+      color: #ffcc00;  
+      font-size: 2em;  
+    }  
+  
+    .testimonial {  
+      font-size: 1.3em;  
+      margin: 10px auto;  
+      max-width: 700px;  
+      font-style: italic;  
+      color: #fff;  
+    }  
+  
+    .message-icon {  
+      position: fixed;  
+      bottom: 20px;  
+      left: 20px;  
+      background-color: #007BFF;  
+      border-radius: 50%;  
+      width: 65px;  
+      height: 65px;  
+      display: flex;  
+      align-items: center;  
+      justify-content: center;  
+      cursor: pointer;  
+      color: white;  
+      font-size: 32px;  
+      z-index: 999;  
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);  
+    }  
+  
+    .popup {  
+      position: fixed;  
+      bottom: 100px;  
+      left: 20px;  
+      background: white;  
+      color: black;  
+      padding: 20px;  
+      border-radius: 10px;  
+      display: none;  
+      box-shadow: 0px 0px 15px #000;  
+      width: 260px;  
+      z-index: 999;  
+    }  
+  
+    .popup input, .popup textarea {  
+      width: 100%;  
+      padding: 10px;  
+      margin: 6px 0;  
+      border: 1px solid #ccc;  
+      border-radius: 5px;  
+    }  
+  
+    .popup button {  
+      background: #28a745;  
+      color: white;  
+      padding: 10px;  
+      border: none;  
+      width: 100%;  
+      border-radius: 5px;  
+      cursor: pointer;  
+      font-weight: bold;  
+    }  
+  
+    .popup button:hover {  
+      background: #1f7a32;  
+    }  
+  
+    .nav {  
+      margin: 25px 0;  
+      display: flex;  
+      justify-content: center;  
+      flex-wrap: wrap;  
+    }  
+  
+    @media (max-width: 768px) {  
+      header {  
+        font-size: 2em;  
+        padding: 20px;  
+      }  
+  
+      .highlight {  
+        padding: 20px;  
+        font-size: 1.2em;  
+      }  
+  
+      .highlight strong {  
+        font-size: 1.4em;  
+      }  
+  
+      .btn {  
+        padding: 14px 26px;  
+        font-size: 18px;  
+        margin: 10px;  
+      }  
+  
+      .section h2 {  
+        font-size: 1.5em;  
+      }  
+  
+      .testimonial {  
+        font-size: 1.1em;  
+      }  
+  
+      .message-icon {  
+        width: 55px;  
+        height: 55px;  
+        font-size: 26px;  
+      }  
+  
+      .popup {  
+        width: 90%;  
+        left: 5%;  
+      }  
+    }  
+  
+    @media (max-width: 480px) {  
+      .highlight {  
+        font-size: 1em;  
+      }  
+  
+      .btn {  
+        width: 80%;  
+        font-size: 16px;  
+      }  
+  
+      .testimonial {  
+        font-size: 1em;  
+      }  
+  
+      .popup h3 {  
+        font-size: 1.2em;  
+      }  
+    }  
+  </style>  
+</head>  
+<body>  
+  
+  <header>  
+    Delux earning platform  
+    <a href="https://www.appcreator24.com/app3560484-0pbdas" target="_blank" class="download-btn">Download</a>  
+  </header>  
+  
+  <div class="highlight">  
+    <p><strong>Claim Your €1800 Welcome Bonus Instantly!</strong></p>  
+    <p>Start earning money daily by watching videos, listening to music, completing surveys, and doing remote jobs. Fast, secure and rewarding transactions with every step we support all currencies.</p>  
+  </div>  
+  
+  <div class="nav">  
+    <a href="/register.html"><button class="btn">Register</button></a>  
+    <a href="/login.html"><button class="btn">Login</button></a>  
+    <a href="/about.html"><button class="btn">About</button></a>  
+  </div>  
+  
+  <div class="section" id="testimonials">  
+    <h2>What People Are Saying</h2>  
+    <div class="testimonial" id="testimonialText">  
+      “I made my first €100 in 3 days just watching ads!” – Lisa from Italy  
+    </div>  
+  </div>  
+  
+  <div class="message-icon" onclick="togglePopup()">✉</div>  
+  
+  <div class="popup" id="popupForm">  
+    <h3>Contact Admin</h3>  
+    <input type="text" id="fullName" placeholder="Full Name" required>  
+    <input type="tel" id="phone" placeholder="Phone Number" required>  
+    <textarea id="message" rows="3" placeholder="Your Message..."></textarea>  
+    <button onclick="sendMessage()">Send</button>  
+  </div>  
+  
+  <script>  
+    const testimonials = [  
+      "“I made my first €100 in 3 days just watching ads!” – Lisa from Italy",  
+      "“€150 bonus received in minutes, wow!” – John from Spain",  
+      "“I earn daily from music while working remotely!” – Amaka from Nigeria",  
+      "“Great way to earn online. Trustworthy and secure.” – David from France",  
+      "“My account was credited instantly, and support is active.” – Tolu from Germany",  
+      "“I do daily surveys and make real cash easily.” – Miguel from Portugal",  
+      "“Perfect for students and freelancers.” – Aisha from Netherlands",  
+      "“Got paid watching YouTube music videos!” – Blessing from Ghana"  
+    ];  
+  
+    let current = 0;  
+    setInterval(() => {  
+      current = (current + 1) % testimonials.length;  
+      document.getElementById('testimonialText').textContent = testimonials[current];  
+    }, 4000);  
+  
+    function togglePopup() {  
+      const popup = document.getElementById("popupForm");  
+      popup.style.display = popup.style.display === "block" ? "none" : "block";  
+    }  
+  
+    function sendMessage() {  
+      const name = document.getElementById("fullName").value.trim();  
+      const phone = document.getElementById("phone").value.trim();  
+      const message = document.getElementById("message").value.trim();  
+      if (name && phone && message) {  
+        const fullMessage = `Name: ${name}\nPhone: ${phone}\nMessage: ${message}`;  
+        alert("You will be redirected to Telegram to contact the admin.\n\n" + fullMessage);  
+        window.open("https://wa.me/+447529287246", '_blank');  
+      } else {  
+        alert("Please fill out all fields.");  
+      }  
+    }  
+  </script>  
+  
+</body>  
+</html> 

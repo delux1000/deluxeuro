@@ -1,0 +1,26 @@
+# robots.txt for your website
+
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /tmp/
+Disallow: /cgi-bin/
+Allow: /
+
+# Crawl-delay to prevent server overload (optional, adjust as needed)
+Crawl-delay: 5
+
+# Sitemap for SEO (replace with your actual sitemap URL)
+Sitemap: https://delux.pagekite.me/sitemap.xml
+
+# Clean-param: Remove URL parameters for better crawling
+Clean-param: ref /page/
+Clean-param: utm_source&utm_medium&utm_campaign /articles/
+
+# Host directive (helpful for Yandex and some crawlers)
+Host: delux.pagekite.me
+
+# Comments for developers
+# - Allow all bots full access except to sensitive folders
+# - Use clean URLs for better indexing
+# - Update sitemap regularly

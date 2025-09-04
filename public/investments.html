@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Investments</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-image: url('https://play-lh.googleusercontent.com/m6lB12IXeK-WqRr-BNc1tVdjNs20OdXuMNqYkA1_bXZb_4kczHbFggDkjKlAAfv-uqk=w526-h296-rw'); /* Background Image URL */
+            background-size: cover;
+            background-position: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        header {
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 1.5rem;
+            animation: slideIn 1s ease-in-out;
+        }
+
+        .container {
+            margin: 20px;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Keep white background with opacity */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .investment-card {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: scaleUp 1s ease-in-out;
+        }
+
+        .investment-card h3 {
+            margin-top: 0;
+            color: #34495e;
+            transition: color 0.3s ease;
+        }
+
+        .investment-card h3:hover {
+            color: #e74c3c;
+        }
+
+        .investment-details {
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .countdown {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-top: 10px;
+            animation: blink 1.5s infinite;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-right: 15px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-back {
+            background-color: #2ecc71;
+        }
+
+        .btn-back:hover {
+            background-color: #27ae60;
+        }
+
+        .btn-invest {
+            background-color: #9b59b6;
+        }
+
+        .btn-invest:hover {
+            background-color: #8e44ad;
+        }
+
+        /* Animation effects */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateY(-50px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleUp {
+            0% {
+                transform: scale(0.95);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes blink {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Media Query for Tablets */
+        @media (max-width: 768px) {
+            header {
+                font-size: 1.2rem;
+            }
+
+            .investment-card {
+                padding: 15px;
+            }
+
+            .btn {
+                font-size: 0.9rem;
+                padding: 10px 18px;
+            }
+        }
+
+        /* Media Query for Mobile Devices */
+        @media (max-width: 480px) {
+            header {
+                font-size: 1rem;
+            }
+
+            .container {
+                margin: 10px;
+                padding: 10px;
+            }
+
+            .investment-card {
+                padding: 12px;
+            }
+
+            .btn {
+                font-size: 0.9rem;
+                padding: 8px 16px;
+            }
+
+            .countdown {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>My Investments</h1>
+</header>
+
+<div class="container">
+    <!-- Investment List will be dynamically populated here -->
+    <div id="investment-list"></div>
+
+    <!-- Buttons -->
+    <div class="actions">
+        <a href="/dashboard.html" class="btn btn-back">Back to Dashboard</a>
+        <a href="/invest.html" class="btn btn-invest">Invest More</a>
+    </div>
+</div>
+
+<script>
+    // Fetch the user's investments from the server
+    fetch('/my-investments')
+        .then(response => response.json())
+        .then(data => {
+            const investmentList = document.getElementById('investment-list');
+            const investments = data.investments;
+
+            // Loop through each investment and display the details
+            investments.forEach(investment => {
+                const now = new Date();
+                const completeDate = new Date(investment.completeDate);
+                const timeRemaining = completeDate - now;
+
+                const daysRemaining = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+                const hoursRemaining = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutesRemaining = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                const secondsRemaining = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+                const countdownText = `${daysRemaining}d ${hoursRemaining}h ${minutesRemaining}m ${secondsRemaining}s`;
+
+                // Create a card for each investment
+                const investmentCard = document.createElement('div');
+                investmentCard.classList.add('investment-card');
+                investmentCard.innerHTML = `
+                    <h3>Investment Amount: ${investment.amount}€</h3>
+                    <div class="investment-details">
+                        <p>Investment Duration: ${investment.duration} days</p>
+                        <p>Status: ${investment.status}</p>
+                        <p>Return Amount: ${investment.returnAmount}€</p>
+                        <p>Complete Date: ${new Date(investment.completeDate).toLocaleString()}</p>
+                        <p class="countdown">Time Remaining: ${countdownText}</p>
+                    </div>
+                `;
+
+                investmentList.appendChild(investmentCard);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching investments:', error);
+        });
+</script>
+
+</body>
+</html>

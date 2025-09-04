@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction History</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpIiZYEbnsFJyq-5psf-KE8PKJakSuhPNyaKGUVUj3iQ&s&ec=72917722'); /* Replace with your background image URL */
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 2.5em;
+        }
+
+        #transaction-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .transaction-item {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 15px;
+            margin: 10px;
+            border-radius: 10px;
+            width: 80%;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .transaction-item p {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+
+        .view-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .view-button:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #00BFFF;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+        a:hover {
+            color: #1E90FF;
+        }
+    </style>
+</head>
+<body>
+    <h2>Your Transaction History</h2>
+    <div id="transaction-list">
+        <!-- Transaction list will be populated here via JavaScript -->
+    </div>
+
+    <a href="/dashboard.html">Back to Dashboard</a>
+
+    <script>
+        // Fetch transaction history from the server
+        fetch('/transaction-history')
+            .then(response => response.json())
+            .then(data => {
+                const transactions = data.transactions;
+                const transactionList = document.getElementById('transaction-list');
+
+                if (transactions.length === 0) {
+                    transactionList.innerHTML = '<p>No transactions found.</p>';
+                } else {
+                    transactions.forEach(transaction => {
+                        const transactionItem = document.createElement('div');
+                        transactionItem.classList.add('transaction-item');
+                        transactionItem.innerHTML = `
+                            <p>${transaction.type}: €${transaction.amount} on ${transaction.date}</p>
+                        `;
+                        transactionList.appendChild(transactionItem);
+                    });
+                }
+            });
+    </script>
+</body>
+</html>
